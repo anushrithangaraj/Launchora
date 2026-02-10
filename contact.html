@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Launchora</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="loader-circle"></div>
+            <div class="loader-line-mask">
+                <div class="loader-line"></div>
+            </div>
+            <span class="brand-text">Launchora</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h1>Launchora</h1>
+            </a>
+            
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link"><span>Home</span></a></li>
+                    <li><a href="about.html" class="nav-link"><span>About</span></a></li>
+                    <li><a href="services.html" class="nav-link"><span>Services</span></a></li>
+                    <li><a href="portfolio.html" class="nav-link"><span>Portfolio</span></a></li>
+                    <li><a href="contact.html" class="nav-link active contact-btn"><span>Contact</span></a></li>
+                </ul>
+                
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header contact-header">
+        <div class="container">
+            <div class="page-header-content">
+                <span class="page-badge">Get in Touch</span>
+                <h1 class="page-title">Contact Us</h1>
+                <p class="page-subtitle">Have an idea or design need? Let's launch it together.</p>
+            </div>
+            
+            <div class="contact-stats">
+                <div class="contact-stat">
+                    <i class="fas fa-clock"></i>
+                    <div class="stat-content">
+                        <h3>24-Hour Response</h3>
+                        <p>We respond within 24 hours</p>
+                    </div>
+                </div>
+                <div class="contact-stat">
+                    <i class="fas fa-smile"></i>
+                    <div class="stat-content">
+                        <h3>100% Satisfaction</h3>
+                        <p>Client-focused approach</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="section-header">
+                        <span class="section-label">Let's Talk</span>
+                        <h2 class="section-title">Get Your Project Started</h2>
+                        <p class="section-subtitle">Fill out the form or use our contact details below. We're here to help!</p>
+                    </div>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method-card">
+                            <div class="method-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="method-content">
+                                <h3>WhatsApp</h3>
+                                <p>Fast response for quick queries and discussions</p>
+                                <a href="https://wa.me/1234567890" class="btn btn-success">
+                                    <i class="fab fa-whatsapp"></i>
+                                    <span>Message Now</span>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method-card">
+                            <div class="method-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="method-content">
+                                <h3>Call Us</h3>
+                                <p>Speak directly with our team</p>
+                                <a href="tel:+1234567890" class="btn btn-outline">
+                                    <i class="fas fa-phone"></i>
+                                    <span>Call Now</span>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method-card">
+                            <div class="method-icon">
+                                <i class="fab fa-instagram"></i>
+                            </div>
+                            <div class="method-content">
+                                <h3>Instagram</h3>
+                                <p>Follow for updates & message us</p>
+                                <a href="https://instagram.com/launchora" class="btn btn-instagram">
+                                    <i class="fab fa-instagram"></i>
+                                    <span>Follow & DM</span>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method-card">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-content">
+                                <h3>Email</h3>
+                                <p>Send detailed project requirements</p>
+                                <a href="mailto:hello@launchora.com" class="btn btn-outline">
+                                    <i class="fas fa-envelope"></i>
+                                    <span>Send Email</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                
+                <div class="contact-form-container">
+                    <div class="form-card">
+                        <div class="form-header">
+                            <h3>Send us a message</h3>
+                            <p>Fill out the form below and we'll get back to you soon.</p>
+                        </div>
+                        
+                        <form id="contactForm" class="contact-form">
+                            <div class="form-group">
+                                <label for="name">
+                                    <i class="fas fa-user"></i>
+                                    <span>Your Name *</span>
+                                </label>
+                                <input type="text" id="name" class="form-control" placeholder="Enter your full name" required>
+                                <div class="form-error"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">
+                                    <i class="fas fa-phone"></i>
+                                    <span>Phone Number *</span>
+                                </label>
+                                <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
+                                <div class="form-error"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">
+                                    <i class="fas fa-envelope"></i>
+                                    <span>Email Address</span>
+                                </label>
+                                <input type="email" id="email" class="form-control" placeholder="Enter your email">
+                                <div class="form-error"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="service">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>Service Interested In</span>
+                                </label>
+                                <select id="service" class="form-control">
+                                    <option value="">Select a service</option>
+                                    <option value="website">Website Design</option>
+                                    <option value="logo">Logo Design</option>
+                                    <option value="marriage">Marriage Invitation</option>
+                                    <option value="birthday">Birthday Invitation</option>
+                                    <option value="poster">Business Posters</option>
+                                    <option value="social">Social Media Ads</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <div class="form-error"></div>
+                            </div>
+                            
+                            
+                            <div class="form-group">
+                                <label for="message">
+                                    <i class="fas fa-comment-dots"></i>
+                                    <span>Your Message *</span>
+                                </label>
+                                <textarea id="message" class="form-control" placeholder="Tell us about your project requirements, timeline, and any specific ideas you have..." rows="5" required></textarea>
+                                <div class="form-error"></div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-glow">
+                                    <span>Send Message</span>
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                                <p class="form-note">We'll respond within 24 hours.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+   
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-content">
+                    <h2>Start Your Project Today</h2>
+                    <p>Take the first step towards launching your brand. Contact us now for a free quote.</p>
+                    <div class="cta-buttons">
+                        <a href="tel:+1234567890" class="btn btn-primary btn-glow">
+                            <i class="fas fa-phone"></i>
+                            <span>Call Now</span>
+                        </a>
+                        <a href="https://wa.me/1234567890" class="btn btn-success">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="cta-image">
+                    <div class="cta-illustration">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand animate-on-scroll" data-animation="fade-up">
+                    <a href="index.html" class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h2>Launchora</h2>
+                    </a>
+                    <p class="tagline">Logos • Websites • Posters • Invitations</p>
+                    <p class="footer-text">Affordable digital services for small businesses and personal events.</p>
+                    <div class="footer-social">
+                        <a href="https://wa.me/1234567890" class="social-icon" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://instagram.com/launchora" class="social-icon" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="mailto:hello@launchora.com" class="social-icon" aria-label="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="tel:+1234567890" class="social-icon" aria-label="Phone">
+                            <i class="fas fa-phone"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links animate-on-scroll" data-animation="fade-up" data-delay="100">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+                        <li><a href="portfolio.html"><i class="fas fa-chevron-right"></i> Portfolio</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-services animate-on-scroll" data-animation="fade-up" data-delay="200">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Website Design</li>
+                        <li><i class="fas fa-check"></i> Logo Design</li>
+                        <li><i class="fas fa-check"></i> Marriage Invitations</li>
+                        <li><i class="fas fa-check"></i> Birthday Invitations</li>
+                        <li><i class="fas fa-check"></i> Business Posters</li>
+                        <li><i class="fas fa-check"></i> Social Media Ads</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact animate-on-scroll" data-animation="fade-up" data-delay="300">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Design Street, Creative City</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+1 234 567 890</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>hello@launchora.com</span>
+                        </div>
+                    </div>
+                    <p class="footer-text">Have an idea? Let's launch it together!</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Launchora. All rights reserved. | Created with <i class="fas fa-heart"></i> by four passionate friends.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/contact.js"></script>
+</body>
+</html>

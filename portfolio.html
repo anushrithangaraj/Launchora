@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Launchora</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Responsive Portfolio Styles */
+        .portfolio-filter-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-top: 2rem;
+            padding: 0 1rem;
+        }
+        
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(135deg, #667eea, #4c6ef5);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+        
+        .portfolio-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .portfolio-items {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .filter-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .portfolio-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .portfolio-filter-nav {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+                margin: 1.5rem 1rem 0;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            
+            .portfolio-filter-nav::-webkit-scrollbar {
+                display: none;
+            }
+        }
+        
+        .portfolio-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+        
+        .portfolio-image {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 4/3;
+        }
+        
+        .portfolio-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .portfolio-image:hover .portfolio-img {
+            transform: scale(1.05);
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .portfolio-image:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .overlay-content h3 {
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+        
+        .overlay-content p {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+        
+        .portfolio-info {
+            padding: 1.5rem;
+        }
+        
+        .portfolio-category {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #4c6ef5);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        
+        .portfolio-info h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+        }
+        
+        .portfolio-info p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        
+        /* Website button specific styles */
+        .website-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .website-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+            background: linear-gradient(135deg, #128C7E, #0c7c6a);
+        }
+        
+        .website-btn i {
+            font-size: 0.9rem;
+        }
+        
+        /* Web design projects will have this special styling */
+        .portfolio-item[data-category="web"] .portfolio-info {
+            padding-bottom: 1rem;
+        }
+        
+        /* Image Zoom Modal */
+        .image-zoom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .image-zoom-modal.active {
+            display: flex;
+        }
+        
+        .zoom-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(5px);
+        }
+        
+        .zoom-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+            background: transparent;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .zoom-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 3;
+            transition: background 0.3s ease;
+            font-size: 1.5rem;
+        }
+        
+        .zoom-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .zoom-image-container {
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .zoomed-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .zoom-image-container {
+                height: 60vh;
+            }
+            
+            .zoom-close {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1.2rem;
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+        }
+        
+        /* Page Header Responsive */
+        .page-header-content {
+            text-align: center;
+            padding: 0 1rem;
+        }
+        
+        .portfolio-disclaimer {
+            margin-top: 2rem;
+            padding: 0 1rem;
+        }
+        
+        .disclaimer-card {
+            background: linear-gradient(135deg, #fff8e1, #fff3cd);
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        
+        .disclaimer-card i {
+            color: #ffc107;
+            font-size: 1.5rem;
+            margin-top: 0.25rem;
+        }
+        
+        .disclaimer-content h4 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .disclaimer-content p {
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* Portfolio CTA */
+        .portfolio-cta {
+            text-align: center;
+            margin: 4rem 0 2rem;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, #667eea, #4c6ef5);
+            border-radius: 16px;
+            color: white;
+        }
+        
+        .portfolio-cta p {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        /* CTA Section Responsive */
+        .cta-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 2rem;
+            padding: 2rem 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .cta-card {
+                flex-direction: row;
+                text-align: left;
+                padding: 3rem 2rem;
+            }
+            
+            .cta-content {
+                flex: 1;
+            }
+            
+            .cta-image {
+                flex: 0 0 auto;
+            }
+        }
+        
+        /* Footer Responsive */
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .footer-content {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .footer-links ul,
+        .footer-services ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 2rem 1rem 0;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="loader-circle"></div>
+            <div class="loader-line-mask">
+                <div class="loader-line"></div>
+            </div>
+            <span class="brand-text">Launchora</span>
+        </div>
+    </div>
+
+    <!-- Image Zoom Modal -->
+    <div class="image-zoom-modal">
+        <div class="zoom-overlay"></div>
+        <div class="zoom-container">
+            <button class="zoom-close" aria-label="Close zoom">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="zoom-image-container">
+                <img src="" alt="Zoomed Image" class="zoomed-image">
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h1>Launchora</h1>
+            </a>
+            
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link"><span>Home</span></a></li>
+                    <li><a href="about.html" class="nav-link"><span>About</span></a></li>
+                    <li><a href="services.html" class="nav-link"><span>Services</span></a></li>
+                    <li><a href="portfolio.html" class="nav-link active"><span>Portfolio</span></a></li>
+                    <li><a href="contact.html" class="nav-link contact-btn"><span>Contact</span></a></li>
+                </ul>
+                
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header portfolio-header">
+        <div class="container">
+            <div class="page-header-content">
+                <span class="page-badge">Our Work</span>
+                <h1 class="page-title">Portfolio</h1>
+                <p class="page-subtitle">Explore our design samples across different categories. Every project tells a unique story.</p>
+            </div>
+            
+            <div class="portfolio-disclaimer">
+                <div class="disclaimer-card">
+                    <i class="fas fa-info-circle"></i>
+                    <div class="disclaimer-content">
+                        <h4>Important Note</h4>
+                        <p>These are sample or concept designs created to showcase our design quality. Final designs will be customized as per client requirements.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-filter-nav">
+                <button class="filter-btn active" data-filter="all">All Work</button>
+                <button class="filter-btn" data-filter="logo">Logo Design</button>
+                <button class="filter-btn" data-filter="web">Web Design</button>
+                <button class="filter-btn" data-filter="marriage">Marriage Invitations</button>
+                <button class="filter-btn" data-filter="birthday">Birthday Invitations</button>
+                <button class="filter-btn" data-filter="poster">Business Posters</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Portfolio Grid -->
+    <section class="portfolio-grid-section">
+        <div class="container">
+            <div class="portfolio-items">
+                <!-- Logo Designs -->
+                <div class="portfolio-item animate-on-scroll" data-animation="fade-up" data-category="logo">
+                    <div class="portfolio-item-inner">
+                        <div class="portfolio-image">
+                            <img src="images/logo/logo1.png" 
+                                 alt="Design Studio Logo Design" 
+                                 class="portfolio-img"
+                                 data-zoom-src="images/logo/logo1.png">
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <h3>Design Studio</h3>
+                                    <p>Modern logo</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-category">Logo Design</span>
+                            <h3>Design Studio</h3>
+                            <p>Elegant logo</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item animate-on-scroll" data-animation="fade-up" data-delay="100" data-category="logo">
+                    <div class="portfolio-item-inner">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                 alt="GreenGrocers Organic Logo" 
+                                 class="portfolio-img"
+                                 data-zoom-src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <h3>GreenGrocers</h3>
+                                    <p>Organic food store logo</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-category">Logo Design</span>
+                            <h3>GreenGrocers</h3>
+                            <p>Fresh & organic brand identity</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item animate-on-scroll" data-animation="fade-up" data-delay="200" data-category="logo">
+                    <div class="portfolio-item-inner">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1589923186741-b7d59d6b2c4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Pet Paradise Logo" 
+                                 class="portfolio-img"
+                                 data-zoom-src="https://images.unsplash.com/photo-1589923186741-b7d59d6b2c4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <h3>Pet Paradise</h3>
+                                    <p>Pet care services logo</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-category">Logo Design</span>
+                            <h3>Pet Paradise</h3>
+                            <p>Friendly pet care brand logo</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Web Designs -->
+                <div class="portfolio-item animate-on-scroll" data-animation="fade-up" data-category="web">
+                    <div class="portfolio-item-inner">
+                        <div class="portfolio-image">
+                            <img src="images/websites/website1.png" 
+                                 alt="Real Estate Website Design" 
+                                 class="portfolio-img"
+                                 data-zoom-src="images/websites/website1.png">
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <h3>Real Estate</h3>
+                                    <p>E-commerce website design</p>
+                                    <a href="https://dhananjayan-realty.onrender.com" class="website-btn" target="_blank" rel="noopener noreferrer" style="margin-top: 10px;">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        <span>Visit Website</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-category">Web Design</span>
+                            <h3>Real Estate</h3>
+                            <p>Fashion Real Estste website</p>
+                            <!-- <a href="https://example-boutique.com" class="website-btn" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>Visit Website</span>
+                            </a> -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item animate-on-scroll" data-animation="fade-up" data-delay="100" data-category="web">
+                    <div class="portfolio-item-inner">
+                        <div class="portfolio-image">
+                            <img src="images/websites/website2.png" 
+                                 alt="Temple Website Design" 
+                                 class="portfolio-img"
+                                 data-zoom-src="images/websites/website2.png">
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <h3>Temple Website</h3>
+                                    <p>Menu & reservation system</p>
+                                    <a href="https://kaaniyalaiyankovil.github.io/kanniyalaiyankovil/" class="website-btn" target="_blank" rel="noopener noreferrer" style="margin-top: 10px;">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        <span>Visit Website</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-category">Web Design</span>
+                            <h3>Temple Website</h3>
+                            <p>Food ordering & booking system with online menu and table reservation</p>
+                            <!-- <a href="https://example-restaurant.com" class="website-btn" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-external-link-alt"></i>
+                                 <span>Visit Website</span> 
+                            </a> -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Web Design Project -->
+                <div class="portfolio-item animate-on-scroll" data-animation="fade-up" data-delay="200" data-category="web">
+                    <div class="portfolio-item-inner">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Corporate Business Website" 
+                                 class="portfolio-img"
+                                 data-zoom-src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <h3>Corporate Business</h3>
+                                    <p>Professional corporate website</p>
+                                    <a href="https://example-corporate.com" class="website-btn" target="_blank" rel="noopener noreferrer" style="margin-top: 10px;">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        <span>Visit Website</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-category">Web Design</span>
+                            <h3>Corporate Business</h3>
+                            <p>Professional corporate website with CMS and contact management system</p>
+                            <!-- <a href="https://example-corporate.com" class="website-btn" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>Visit Website</span>
+                            </a> -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Marriage Invitations -->
+                <div class="portfolio-item animate-on-scroll" data-animation="fade-up" data-category="marriage">
+                    <div class="portfolio-item-inner">
+                        <div class="portfolio-image">
+                            <img src="images/marriage-invitations/marriage_invitation1.png" 
+                                 alt="Traditional Wedding Invitation" 
+                                 class="portfolio-img"
+                                 data-zoom-src="images/marriage-invitations/marriage_invitation1.png">
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <h3>Traditional Design</h3>
+                                    <p>Elegant wedding invitation</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-category">Marriage Invitation</span>
+                            <h3>Traditional Design</h3>
+                            <p>Classic wedding invitation suite</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item animate-on-scroll" data-animation="fade-up" data-delay="100" data-category="marriage">
+                    <div class="portfolio-item-inner">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Modern Wedding Invitation" 
+                                 class="portfolio-img"
+                                 data-zoom-src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <h3>Modern Minimal</h3>
+                                    <p>Contemporary wedding design</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-category">Marriage Invitation</span>
+                            <h3>Modern Minimal</h3>
+                            <p>Clean & elegant design</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item animate-on-scroll" data-animation="fade-up" data-delay="200" data-category="marriage">
+                    <div class="portfolio-item-inner">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Luxury Wedding Invitation" 
+                                 class="portfolio-img"
+                                 data-zoom-src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <h3>Luxury Design</h3>
+                                    <p>Premium wedding invitation</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-category">Marriage Invitation</span>
+                            <h3>Luxury Design</h3>
+                            <p>Premium wedding suite</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Birthday Invitations -->
+                <div class="portfolio-item animate-on-scroll" data-animation="fade-up" data-category="birthday">
+                    <div class="portfolio-item-inner">
+                        <div class="portfolio-image">
+                            <img src="images/birthday-invitations/birthday1.png" 
+                                 alt="Kids Birthday Invitation" 
+                                 class="portfolio-img"
+                                 data-zoom-src="images/birthday-invitations/birthday1.png">
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <h3>Kids Birthday</h3>
+                                    <p>Colorful cartoon theme</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-category">Birthday Invitation</span>
+                            <h3>Kids Birthday</h3>
+                            <p>Fun children's party invitation</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item animate-on-scroll" data-animation="fade-up" data-delay="100" data-category="birthday">
+                    <div class="portfolio-item-inner">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Adult Birthday Invitation" 
+                                 class="portfolio-img"
+                                 data-zoom-src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <h3>Adult Birthday</h3>
+                                    <p>Elegant milestone celebration</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-category">Birthday Invitation</span>
+                            <h3>Adult Birthday</h3>
+                            <p>Sophisticated birthday invite</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Business Posters -->
+                <div class="portfolio-item animate-on-scroll" data-animation="fade-up" data-category="poster">
+                    <div class="portfolio-item-inner">
+                        <div class="portfolio-image">
+                            <img src="images/posters/poster1.png" 
+                                 alt="Shop Opening Poster" 
+                                 class="portfolio-img"
+                                 data-zoom-src="images/posters/poster1.png">
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <h3>Shop Opening</h3>
+                                    <p>Grand opening announcement</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-category">Business Poster</span>
+                            <h3>Shop Opening</h3>
+                            <p>Store launch promotion</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item animate-on-scroll" data-animation="fade-up" data-delay="100" data-category="poster">
+                    <div class="portfolio-item-inner">
+                        <div class="portfolio-image">
+                            <img src="images/posters/poster2.png" 
+                                 alt="Sale Promotion Poster" 
+                                 class="portfolio-img"
+                                 data-zoom-src="images/posters/poster2.png">
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <h3>Sale Promotion</h3>
+                                    <p>Discount sale advertisement</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-category">Business Poster</span>
+                            <h3>Sale Promotion</h3>
+                            <p>Store launch promotion</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item animate-on-scroll" data-animation="fade-up" data-delay="200" data-category="poster">
+                    <div class="portfolio-item-inner">
+                        <div class="portfolio-image">
+                            <img src="images/posters//poster3.png" 
+                                 alt="Social Media Advertisement" 
+                                 class="portfolio-img"
+                                 data-zoom-src="images/posters//poster3.png">
+                            <div class="portfolio-overlay">
+                                <div class="overlay-content">
+                                    <h3>Social Media Ad</h3>
+                                    <p>Car advertisement design</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-category">Social Media Ad</span>
+                            <h3>Car Ad</h3>
+                            <p>Car Ad design</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-cta">
+                <p>Like what you see? Let's create something amazing for your brand.</p>
+                <a href="contact.html" class="btn btn-primary btn-glow">
+                    <span>Start Your Project</span>
+                    <i class="fas fa-rocket"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-content">
+                    <h2>Ready to Showcase Your Brand?</h2>
+                    <p>Let's work together to create designs that make your business stand out.</p>
+                    <a href="contact.html" class="btn btn-primary btn-glow">
+                        <span>Get Your Custom Design</span>
+                        <i class="fas fa-paint-brush"></i>
+                    </a>
+                </div>
+                <div class="cta-image">
+                    <div class="cta-illustration">
+                        <i class="fas fa-award"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand animate-on-scroll" data-animation="fade-up">
+                    <a href="index.html" class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h2>Launchora</h2>
+                    </a>
+                    <p class="tagline">Logos • Websites • Posters • Invitations</p>
+                    <p class="footer-text">Affordable digital services for small businesses and personal events.</p>
+                    <div class="footer-social">
+                        <a href="https://wa.me/1234567890" class="social-icon" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://instagram.com/launchora" class="social-icon" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="mailto:hello@launchora.com" class="social-icon" aria-label="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="tel:+1234567890" class="social-icon" aria-label="Phone">
+                            <i class="fas fa-phone"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links animate-on-scroll" data-animation="fade-up" data-delay="100">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+                        <li><a href="portfolio.html"><i class="fas fa-chevron-right"></i> Portfolio</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-services animate-on-scroll" data-animation="fade-up" data-delay="200">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Website Design</li>
+                        <li><i class="fas fa-check"></i> Logo Design</li>
+                        <li><i class="fas fa-check"></i> Marriage Invitations</li>
+                        <li><i class="fas fa-check"></i> Birthday Invitations</li>
+                        <li><i class="fas fa-check"></i> Business Posters</li>
+                        <li><i class="fas fa-check"></i> Social Media Ads</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact animate-on-scroll" data-animation="fade-up" data-delay="300">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Design Street, Creative City</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+1 234 567 890</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>hello@launchora.com</span>
+                        </div>
+                    </div>
+                    <p class="footer-text">Have an idea? Let's launch it together!</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Launchora. All rights reserved. | Created with <i class="fas fa-heart"></i> by four passionate friends.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/portfolio.js"></script>
+</body>
+</html>
