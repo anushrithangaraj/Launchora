@@ -1,0 +1,16 @@
+{
+  "name": "launchora-website",
+  "version": "1.0.0",
+  "description": "Launchora - Creative Digital Services",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["design", "web", "creative"],
+  "author": "Launchora Team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
